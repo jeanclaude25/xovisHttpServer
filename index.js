@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const app = express();
+require('dotenv').config();
 const basicAuth = require('basic-auth');
 
 const PORT = 8080;
@@ -11,8 +12,8 @@ const PORT = 8080;
 app.use(bodyParser.json());
 
 // Définir les informations d'authentification (nom d'utilisateur et mot de passe)
-const validUsername = 'admin';
-const validPassword = 't10m5%DATAPUSH%tioms';
+const validUsername = process.env.XOVIS_DATAPUSH_USERNAME;
+const validPassword = process.env.XOVIS_DATAPUSH_PASSWORD;
 
 // Fonction middleware d'authentification basique
 function authenticate(req, res, next) {
