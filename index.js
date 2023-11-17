@@ -3,13 +3,11 @@ const bodyParser = require('body-parser');
 const app = express();
 require('dotenv').config();
 const basicAuth = require('basic-auth');
+const DatabaseAccess = require('./Firebase/FirebaseSetup');
+app.use(bodyParser.json());
 
 const PORT = 8080;
 
-
-
-
-app.use(bodyParser.json());
 
 // Définir les informations d'authentification (nom d'utilisateur et mot de passe)
 const validUsername = process.env.XOVIS_DATAPUSH_USERNAME;
@@ -27,9 +25,11 @@ function authenticate(req, res, next) {
   }
 
 
-app.post('/xovisPush', authenticate, (req, res) => {
+app.post('/xovisPush', authenticate, async(req, res) => {
   // Traitement des données Xovis
-  
+    const data = req.body;
+    await DatabaseAccess.add(data);
+    
   console.log("Données Xovis reçues :", req.body);
   res.status(200).send('Données Xovis reçues avec succès');
 });
