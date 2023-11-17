@@ -1,4 +1,5 @@
-const firebase = require('firebase');
+const { initializeApp } = require('firebase/app');
+const { getFirestore } = require('@firebase/firestore');
 
 const firebaseConfig = {
     apiKey: process.env.APP_apiKey,
@@ -9,8 +10,7 @@ const firebaseConfig = {
     appId: process.env.APP_appId
 };
 
-firebase.initializeApp(firebaseConfig);
-const db = firebase.firestore();
-const DBAccess = db.collection('Bantiger');
+const app = initializeApp(firebaseConfig);
+const firestore = getFirestore(app);
 
-module.exports = DBAccess;
+module.exports = firestore;

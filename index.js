@@ -3,7 +3,7 @@ const bodyParser = require('body-parser');
 const app = express();
 require('dotenv').config();
 const basicAuth = require('basic-auth');
-const DatabaseAccess = require('./Firebase/FirebaseSetup');
+const handleSubmit = require('./Firebase/FirebaseHandleSubmit');
 app.use(bodyParser.json());
 
 const PORT = 8080;
@@ -28,7 +28,7 @@ function authenticate(req, res, next) {
 app.post('/xovisPush', authenticate, async(req, res) => {
   // Traitement des données Xovis
     const data = req.body;
-    await DatabaseAccess.add(data);
+    await handleSubmit('Bantiger', data);
     
   console.log("Données Xovis reçues :", req.body);
   res.status(200).send('Données Xovis reçues avec succès');
